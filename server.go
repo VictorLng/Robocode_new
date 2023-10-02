@@ -36,7 +36,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	user := "user 1"
 	utcTimeLoc := time.FixedZone("UTC", -3)
 	t := time.Now()
-	s := t.In(utcTimeLoc).Format(http.TimeFormat)
+	seet := t.In(utcTimeLoc).Format(http.TimeFormat)
 	tpl, err := template.ParseFiles(index)
 
 	if err != nil {
@@ -48,7 +48,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 	strVar := map[string]any{
 		"user": user,
-		"data": s,
+		"data": seet,
 	}
 
 	w.WriteHeader(http.StatusOK)
