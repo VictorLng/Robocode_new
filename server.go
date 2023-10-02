@@ -9,7 +9,7 @@ import (
 
 func envPage(w http.ResponseWriter, r *http.Request) {
 
-	envPage := "src/pagina de envios.html"
+	envPage := "pages/pagina de envios.html"
 
 	tpl, err := template.ParseFiles(envPage)
 
@@ -32,7 +32,7 @@ func envPage(w http.ResponseWriter, r *http.Request) {
 
 func index(w http.ResponseWriter, r *http.Request) {
 
-	index := "src/Index.html"
+	index := "pages/Index.html"
 	user := "user 1"
 	utcTimeLoc := time.FixedZone("UTC", -3)
 	t := time.Now()
