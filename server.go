@@ -61,11 +61,12 @@ func main() {
 	http.HandleFunc("/env", envPage)
 	http.HandleFunc("/", index)
 
-	folderSystem := http.FileServer(http.Dir("./src/"))
+	folderSystem := http.FileServer(http.Dir("./pages/"))
 
-	pathRequest := http.StripPrefix("/src/", folderSystem)
+	pathRequest := http.StripPrefix("/pages/", folderSystem)
 
-	http.Handle("/src/", pathRequest)
+	http.Handle("/pages/", pathRequest)
+	http.Handle("/src/backend/", http.StripPrefix("/src/backend/", http.FileServer(http.Dir("./src/backend/"))))
 	http.ListenAndServe(":8080", nil)
 
 }
