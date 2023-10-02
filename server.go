@@ -55,12 +55,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	tpl.Execute(w, strVar)
 }
-
+func styles(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "assets/css/styles.css")
+}
 func main() {
 
 	http.HandleFunc("/env", envPage)
 	http.HandleFunc("/", index)
-
+	http.HandleFunc("/style", styles)
 	folderSystem := http.FileServer(http.Dir("./pages/"))
 
 	pathRequest := http.StripPrefix("/pages/", folderSystem)
