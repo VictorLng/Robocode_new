@@ -1,3 +1,3 @@
-module github.com/VictorLng/Site_pgo.git
+module localhost/server
 
 go 1.20
