@@ -1,74 +1,81 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
+	//"fmt"
+	//"html/template"
 	"net/http"
-	"time"
+	//"time"
+	router "src/config/router"
 )
 
-func envPage(w http.ResponseWriter, r *http.Request) {
+// func envPage(w http.ResponseWriter, r *http.Request) {
 
-	envPage := "pages/pagina de envios.html"
+// 	envPage := "pages/pagina de envios.html"
 
-	tpl, err := template.ParseFiles(envPage)
+// 	tpl, err := template.ParseFiles(envPage)
 
-	if err != nil {
-		fmt.Println(`ocorreu um erro fatal em sua pagina, o arquivo não foi encontrado.`)
+// 	if err != nil {
+// 		fmt.Println(`ocorreu um erro fatal em sua pagina, o arquivo não foi encontrado.`)
 
-		fmt.Fprintf(w, `[ERRO], Não foi encontrado uma rota para a pagina selecionada, va para o 
-		 youtube e se divirtar`)
+// 		fmt.Fprintf(w, `[ERRO], Não foi encontrado uma rota para a pagina selecionada, va para o
+// 		 youtube e se divirtar`)
 
-		return
-	}
-	data := map[string]any{
-		"title": "minha pagina",
-		"subT":  "minha pagina toda em go",
-	}
-	w.WriteHeader(http.StatusOK)
+// 		return
+// 	}
+// 	data := map[string]any{
+// 		"title": "minha pagina",
+// 		"subT":  "minha pagina toda em go",
+// 	}
+// 	w.WriteHeader(http.StatusOK)
 
-	tpl.Execute(w, data)
-}
+// 	tpl.Execute(w, data)
+// }
 
-func index(w http.ResponseWriter, r *http.Request) {
+// func index(w http.ResponseWriter, r *http.Request) {
 
-	index := "pages/Index.html"
-	user := "user 1"
-	utcTimeLoc := time.FixedZone("UTC", -3)
-	t := time.Now()
-	seet := t.In(utcTimeLoc).Format(http.TimeFormat)
-	tpl, err := template.ParseFiles(index)
+// 	index := "pages/Index.html"
+// 	user := "user 1"
+// 	utcTimeLoc := time.FixedZone("UTC", -3)
+// 	t := time.Now()
+// 	seet := t.In(utcTimeLoc).Format(http.TimeFormat)
+// 	tpl, err := template.ParseFiles(index)
 
-	if err != nil {
-		fmt.Println("ERRO 404, NÃO FOI ENCONTRADO PAGINA")
+// 	if err != nil {
+// 		fmt.Println("ERRO 404, NÃO FOI ENCONTRADO PAGINA")
 
-		fmt.Fprintf(w, "404 SEM ROTA")
+// 		fmt.Fprintf(w, "404 SEM ROTA")
 
-		return
-	}
-	strVar := map[string]any{
-		"user": user,
-		"data": seet,
-	}
+// 		return
+// 	}
+// 	strVar := map[string]any{
+// 		"user": user,
+// 		"data": seet,
+// 	}
 
-	w.WriteHeader(http.StatusOK)
+// 	w.WriteHeader(http.StatusOK)
 
-	tpl.Execute(w, strVar)
-}
-func styles(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "assets/css/styles.css")
-}
+//		tpl.Execute(w, strVar)
+//	}
+//
+//	func styles(w http.ResponseWriter, r *http.Request) {
+//		http.ServeFile(w, r, "assets/css/styles.css")
+//	}
 func main() {
 
-	http.HandleFunc("/env", envPage)
-	http.HandleFunc("/", index)
-	http.HandleFunc("/style", styles)
-	folderSystem := http.FileServer(http.Dir("./pages/"))
+	// http.HandleFunc("/env", envPage)
+	// http.HandleFunc("/", index)
+	// http.HandleFunc("/style", styles)
+	// folderSystem := http.FileServer(http.Dir("./pages/"))
 
-	pathRequest := http.StripPrefix("/pages/", folderSystem)
+	router.HandleRoutes()
 
-	http.Handle("/pages/", pathRequest)
-	http.Handle("/src/backend/", http.StripPrefix("/src/backend/", http.FileServer(http.Dir("./src/backend/"))))
+	// pathRequest := http.StripPrefix("/pages/", folderSystem)
+
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+
+	// http.Handle("/pages/", pathRequest)
+	// http.Handle("/src/backend/", http.StripPrefix("/src/backend/", http.FileServer(http.Dir("./src/backend/"))))
+
 	http.ListenAndServe(":8080", nil)
 
 }

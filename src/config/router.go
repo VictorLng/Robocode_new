@@ -1,10 +1,5 @@
 package config
 
-import (
-	"net/http"
-)
+func HandleRoutes() {
 
-func router() {
-
-	http.HandleFunc()
 }

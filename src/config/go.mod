@@ -1,3 +1,3 @@
-module localhost/router
+module localhost.com/router
 
 go 1.20
